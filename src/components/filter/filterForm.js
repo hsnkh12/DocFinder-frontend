@@ -130,5 +130,5 @@ const clinics = [
 
 const sort = [
     'reviews',
-    'alphabet'
+    'date added'
 ]

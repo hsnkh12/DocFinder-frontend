@@ -93,6 +93,12 @@ function NavigationBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
+
+            <Link to='/'>
+              <MenuItem key={'home'} >
+                <Typography textAlign="center">{'home'}</Typography>
+              </MenuItem>
+            </Link>
             <Link to='/doctors'>
               <MenuItem key={'doctors'} >
                 <Typography textAlign="center">{'doctors'}</Typography>
@@ -134,6 +140,14 @@ function NavigationBar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+          <Link to={'/'}>
+              <Button
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                home
+              </Button>
+              </Link>
           <Link to={'/doctors'}>
               <Button
                 sx={{ my: 2, color: 'white', display: 'block' }}

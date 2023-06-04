@@ -5,7 +5,7 @@ export default function DoctorItem(props){
 
     const doc = props.doc
     const docURL = '/doctors/'+doc.doctor_id
-    const reviewsURL = '/reviwes'+doc.doctor_id
+    const reviewsURL = '/reviews/'+doc.doctor_id
 
     const getRatingAvg = () => {
 

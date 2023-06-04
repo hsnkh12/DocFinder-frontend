@@ -1,22 +1,23 @@
 import { Grid } from "@mui/material"
 import Review from "./review"
 
-export default function ReviewsList(){
+export default function ReviewsList(props){
 
 
     return (
         <div>
-            <Grid item>
-                <Review></Review>
-                <hr></hr>
+            { props.reviews.map( (rev) => {
+                return(
+                    <div>
+                <Grid item>
+                    <Review review={rev}></Review>
+                </Grid>
                 <br></br>
-            </Grid>
-
-            <Grid item>
-                <Review></Review>
-                <hr></hr>
                 <br></br>
-            </Grid>
+                </div>
+                )
+            })}
+            
         </div>
     )
 }

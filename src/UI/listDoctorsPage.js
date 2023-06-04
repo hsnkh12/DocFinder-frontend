@@ -23,8 +23,16 @@ export default function ListDoctorsPage(){
 
         const response = await axios.request('http://localhost:8000/doctors?field_name='+field_name+"&clinic_id="+clinic_id,)
         
+        const doctors = orderBy === "reviews"? response.data.sort( (a,b) => {
+          
+          const ratingA = a.avgReviews[0].rating === null ? 0 : a.avgReviews[0].rating;
+          const ratingB = a.avgReviews[0].rating === null ? 0 : b.avgReviews[0].rating;
+    
+          return ratingB - ratingA;
+          
+        }): response.data
 
-        setDoctors(response.data)
+        setDoctors(doctors)
 
       } catch (error) {
         console.log(error)

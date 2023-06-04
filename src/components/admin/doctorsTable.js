@@ -9,13 +9,16 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 
 
-const rows = [
-  {id:"123", name:"Dr. Hassan", speciality:"General surgery", clinic:"cl 1", date_added:"19/12/2023"},
-  {id:"123", name:"Dr. Hassan", speciality:"General surgery", clinic:"cl 1", date_added:"19/12/2023"},
-  {id:"123", name:"Dr. Hassan", speciality:"General surgery", clinic:"cl 1", date_added:"19/12/2023"},
-];
+export default function DoctorsTable(props) {
 
-export default function DoctorsTable() {
+  const handleDeleteButton = (id) => {
+    const c = window.confirm("Are you sure you want to delete doctor with id  '"+id+"'?")
+
+    if(c){
+      props.deleteDoctorRequest(id)
+    }
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -30,19 +33,19 @@ export default function DoctorsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.doctors.map((doc) => (
             <TableRow
-              key={row.name}
+              key={doc.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.id}
+                {doc.doctor_id}
               </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.speciality}</TableCell>
-              <TableCell align="right">{row.clinic}</TableCell>
-              <TableCell align="right">{row.date_added}</TableCell>
-              <TableCell align="right"><Button variant="contained" style={{backgroundColor:'red'}}>remove</Button></TableCell>
+              <TableCell align="right">{doc.name}</TableCell>
+              <TableCell align="right">{doc.field_name}</TableCell>
+              <TableCell align="right">{doc.clinic_id}</TableCell>
+              <TableCell align="right">{doc.date_added}</TableCell>
+              <TableCell align="right"><Button variant="contained" style={{backgroundColor:'red'}} onClick={ () => handleDeleteButton(doc.doctor_id) } >remove</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

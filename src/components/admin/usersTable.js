@@ -9,38 +9,32 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 
 
-const rows = [
-  {id:"123", name:"Hassan", email:"hassankh613@gmail.com", role:"user", date_joined:"19/12/2023"},
-];
-
-export default function UsersTable() {
+export default function UsersTable(props) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Username</TableCell>
             <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Role</TableCell>
+            <TableCell align="right">role</TableCell>
             <TableCell align="right">Date joined</TableCell>
-            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.users.map((user) => (
             <TableRow
-              key={row.name}
+              key={user.username}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.id}
+                {user.userId}
               </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.role}</TableCell>
-              <TableCell align="right">{row.date_joined}</TableCell>
-              <TableCell align="right"><Button variant="contained" style={{backgroundColor:'red'}}>remove</Button></TableCell>
+              <TableCell align="right">{user.username}</TableCell>
+              <TableCell align="right">{user.email}</TableCell>
+              <TableCell align="right">{user.is_admin? "Admin": "Normal user"}</TableCell>
+              <TableCell align="right">{user.date_added}</TableCell>
             </TableRow>
           ))}
         </TableBody>

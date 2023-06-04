@@ -1,14 +1,24 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { Grid } from '@mui/material';
 
-export default function AdminFilterForm() {
+export default function AdminFilterForm(props) {
+
+    const handleSpecChange = (event, newValue) => {
+        props.setSpec(newValue)
+    }
+
+    const handleClinicChange = (event, newValue) => {
+        props.setClinic(newValue)
+    }
+
+
   return (
     <Grid container spacing={2}>
 
-        <Grid item xs={6} md={6}>
+<Grid item xs={6} md={6}>
             <Stack spacing={2}>
             <p style={{textAlign:'start', fontSize:20}}>Filter</p>
             <Autocomplete
@@ -16,7 +26,8 @@ export default function AdminFilterForm() {
                 size="small"
                 options={specs}
                 getOptionLabel={(option) => option}
-                defaultValue={specs[0]}
+                defaultValue={props.spec}
+                onChange={handleSpecChange}
                 renderInput={(params) => (
                 <TextField
                     {...params}
@@ -30,7 +41,8 @@ export default function AdminFilterForm() {
                 size="small"
                 options={clinics}
                 getOptionLabel={(option) => option}
-                defaultValue={clinics[0]}
+                defaultValue={props.clinic}
+                onChange={handleClinicChange}
                 renderInput={(params) => (
                 <TextField
                     {...params}
@@ -39,18 +51,8 @@ export default function AdminFilterForm() {
                 />
                 )}
             />
-            
             </Stack>
 
-            
-        </Grid>
-
-        <Grid item xs={4} md={4}>
-
-            <Stack spacing={2}>
-            <p style={{textAlign:'start', fontSize:20}}>Date</p>
-            <input type={"date"} style={{marginTop:20, height:40}}></input>
-            </Stack>
             
         </Grid>
     </Grid>
@@ -59,18 +61,42 @@ export default function AdminFilterForm() {
 
 
 const specs = [
-    'All',
-    'spec1',
-    'spec1'
-];
+    'all',
+    'Aesthetics and Plastic Reconstructive Surgery',
+    'Anesthesia and Reanimation',
+    'Cardiology',
+    'Cardiovascular Surgery',
+    'Dentist',
+    'Eye Health and Diseases',
+    'Gastroenterology',
+    'General Surgery',
+    'Gynecology and Obstetrics',
+    'IN VITRO FERTILIZATION',
+    'Internal Medicine',
+    'Laboratory',
+    'Language and Speech Disorders',
+    'Neurology',
+    'Nutrition and Diet',
+    'Ophthalmology',
+    'Oral, Dental and Maxillofacial Surgery',
+    'Orthodontics',
+    'Orthopedics and Traumatology',
+    'Otorhinolaryngology',
+    'Pathology',
+    'Pediatrics',
+    'Pedodontics (Pediatric Dentistry)',
+    'Periodontology (Gingival Diseases)',
+    'Physical Treatment and Rehabilitation',
+    'Psychiatry',
+    'Psychology',
+    'Pulmonology',
+    'Radiology',
+    'Skin Diseases',
+    'Techniques Podology',
+    'Urology',
+    'X Orthesis and Prosthesis'
+  ];
 
 const clinics = [
-    'All',
-    'cl1',
-    'cl1'
+    "Cyprus Central Hospital"
 ];
-
-const sort = [
-    'reviews',
-    'alphabet'
-]

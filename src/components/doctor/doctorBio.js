@@ -21,7 +21,7 @@ export default function DoctorBio(props){
             <hr></hr>
 
             <h2 >Reviews</h2>
-            <Review></Review>
+            { doc.reviewResult ? <Review review={doc.reviewResult}></Review>: <p>No reviews added to this doctor</p>}
             <Link to={"/reviews/"+doc.doctor_id}>View all..</Link>
         </div>
     )

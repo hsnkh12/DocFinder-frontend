@@ -12,6 +12,7 @@ import ScrapDoctorsPage from './UI/scrapDoctorsPage';
 import AdminUsersPage from './UI/adminUsersPage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from './scrolToTop';
+import {AdminProvider} from './hooks/auth'
 
 function App() {
   return (
@@ -31,10 +32,11 @@ function App() {
         
       </Route>
       <Route path="/admin">
-        <Route index element={<AdminPage></AdminPage>} />
-        <Route path="doctors" element={<AdminDoctorsPage></AdminDoctorsPage>} />
-        <Route path="users" element={<AdminUsersPage></AdminUsersPage>} />
-        <Route path="scrap-doctors" element={<ScrapDoctorsPage></ScrapDoctorsPage>} />
+        
+        <Route index element={<AdminProvider><AdminPage></AdminPage></AdminProvider>} />
+        <Route path="doctors" element={<AdminProvider><AdminDoctorsPage></AdminDoctorsPage></AdminProvider>} />
+        <Route path="users" element={<AdminProvider><AdminUsersPage></AdminUsersPage></AdminProvider>} />
+        <Route path="scrap-doctors" element={<AdminProvider><ScrapDoctorsPage></ScrapDoctorsPage></AdminProvider>} />
       </Route>
 
       </Routes>

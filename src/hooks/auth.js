@@ -4,6 +4,47 @@ import { useNavigate } from "react-router-dom";
 
 // Create the AuthContext
 const AuthContext = createContext();
+const userAdminContext = createContext();
+
+const AdminProvider = ({children}) => {
+  const [isUserAdmin, setUserAdmin] = useState(false)
+  const navigate = useNavigate()
+
+  const checkUserAdminRequest= async()=> {
+
+    try{
+
+        const token = localStorage.getItem('token');
+
+        if(!token){
+            return navigate("/signin")
+        }
+  
+        await axios({
+            method: 'get',
+            url: "http://localhost:8000/is-admin/",
+            headers: {"authorization" : `Bearer ${token}`},
+        })
+
+        setUserAdmin(true)
+
+    } catch (error) {
+        console.log(error)
+        alert("You should be admin to access this panel")
+        navigate("/")
+    }
+  }
+
+  useEffect( ()=> {
+      checkUserAdminRequest()
+  },[])
+
+  return (
+    <userAdminContext.Provider value={{isUserAdmin,setUserAdmin}}>
+      {children}
+    </userAdminContext.Provider>
+  )
+}
 
 // Create the AuthProvider component
 const AuthProvider = ({ children }) => {
@@ -82,4 +123,4 @@ function useSignOut() {
 }
 
 
-export {useAuth, useSignOut, AuthContext, AuthProvider}
+export {useAuth, useSignOut, AuthContext, AuthProvider,AdminProvider ,userAdminContext}
