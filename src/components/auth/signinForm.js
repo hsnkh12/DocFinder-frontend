@@ -74,7 +74,7 @@ export default function SignInForm() {
             >
               Sign In
             </Button>
-            <Link href="#" variant="body2" style={{color:'white'}}>
+            <Link href="/signup" variant="body2" style={{color:'white'}}>
                   {"Don't have an account? Sign Up"}
             </Link>
           </Box>
