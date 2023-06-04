@@ -1,29 +1,62 @@
 import { Grid } from '@mui/material';
 import { Link } from "react-router-dom"
 
-export default function DoctorItem(){
+export default function DoctorItem(props){
+
+    const doc = props.doc
+    const docURL = '/doctors/'+doc.doctor_id
+    const reviewsURL = '/reviwes'+doc.doctor_id
+
+    const getRatingAvg = () => {
+
+        let rate = doc.avgReviews[0].rating
+        rate = !rate? 0.0: Math.round(rate, 1)
+  
+        return rate
+      }
+  
+      const getRatingColor = () => {
+
+        const rate = getRatingAvg()
+
+        if (rate == 0){
+            return "gray"
+        }
+  
+        if( rate  > 0 && rate < 2.0 ){
+          return "#c21f1f"
+        } 
+        if ( rate >= 2.0 && rate < 3.0 ){
+          return "#cf9a1f"
+        } 
+        if ( rate >= 3.0 && rate < 4){
+          return '#4caf50'
+        }
+        return '#2d8531'
+      }
+  
 
     return (
         <Grid container spacing={2}>
 
             <Grid item xs={9} md={9} style={{textAlign:'start'}}>
-            <Link to="/doctors/123" style={{fontSize:20}}>Dr. Emery Heck</Link>
+            <Link to={docURL} style={{fontSize:20}}>{doc.name}</Link>
             <Grid container> 
                 <Grid item xs={2} md={2}>
-                <p style={{fontWeight: 'bold'}}>General surgery</p>
+                <p style={{fontWeight: 'bold'}}>{doc.field_name}</p>
                 </Grid>
                 <Grid item xs={10} md={10}>
-                <p>Clinic name</p>
+                <p>Cyprus Central Hospital</p>
                 </Grid>
             </Grid>
-            <p style={{maxWidth:300}}>addresss: 86 Athinon StreetNora Court3rd Floor Office Flat 301-302.....</p>
+            <p style={{maxWidth:300}}>Esref Bitlis Cad. Narlik Street, Famagusta</p>
             </Grid>
             <Grid item xs={3} md={3} style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
 
                 <div style={{marginBottom:20}}>
 
-                <p style={{fontSize:20, color:'#4caf50'}}>4.5</p>
-                <Link to="/react">Reviews</Link>
+                <p style={{fontSize:20, color:getRatingColor()}}>{getRatingAvg()}</p>
+                <Link to={reviewsURL}>Reviews</Link>
 
                 </div>
                 

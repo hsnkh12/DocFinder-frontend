@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,28 +13,33 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom"
-
-const pages = ['doctors', 'signin', 'signup', 'admin'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { useSignOut } from '../../hooks/auth';
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../hooks/auth';
 
 function NavigationBar() {
+
+  const { isAuthenticated,setIsAuthenticated } = useContext(AuthContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate()
+  const { signOut } = useSignOut();
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+
+  const handleSignOut = () => {
+    signOut()
+    alert("Signed out")
+    setIsAuthenticated(false)
+    navigate('/signin');
+  }
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <AppBar position="static">
@@ -89,25 +94,24 @@ function NavigationBar() {
               }}
             >
             <Link to='/doctors'>
-              <MenuItem key={'doctors'} onClick={handleCloseNavMenu}>
+              <MenuItem key={'doctors'} >
                 <Typography textAlign="center">{'doctors'}</Typography>
               </MenuItem>
             </Link>
-            <Link to='/signin'>
-              <MenuItem key={'sign in'} onClick={handleCloseNavMenu}>
+
+            { !isAuthenticated? <><Link to='/signin'>
+              <MenuItem key={'sign in'} >
                 <Typography textAlign="center">{'sign in'}</Typography>
               </MenuItem>
-            </Link>
-            <Link to='/signup'>
-              <MenuItem key={'sign up'} onClick={handleCloseNavMenu}>
+              </Link> <Link to='/signup'>
+              <MenuItem key={'sign up'} >
                 <Typography textAlign="center">{'sign up'}</Typography>
               </MenuItem>
-            </Link>
-            <Link to='/admin'>
-              <MenuItem key={'admin'} onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">{'admin'}</Typography>
+            </Link></>: 
+              <MenuItem key={'sign out'} onClick={handleSignOut}>
+                <Typography textAlign="center">{'sign out'}</Typography>
               </MenuItem>
-            </Link>
+            }
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -130,47 +134,36 @@ function NavigationBar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Link to={'/'+page}>
+          <Link to={'/doctors'}>
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                doctors
               </Button>
               </Link>
-            ))}
-          </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              {!isAuthenticated? <><Link to={'/signin'}>
+              <Button
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                sign in
+              </Button>
+              </Link>
+
+              <Link to={'/signup'}>
+              <Button
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                signup
+              </Button>
+              </Link></>:
+              <Button onClick={handleSignOut}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                sign out
+              </Button>
+              }
+
           </Box>
         </Toolbar>
       </Container>

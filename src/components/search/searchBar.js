@@ -3,7 +3,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 
-function SearchBar(){
+
+
+function SearchBar(props){
+
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -27,9 +30,7 @@ function SearchBar(){
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor:'white',
         border:'none',
-        borderRadius: 17,
       }));
 
       const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -48,12 +49,13 @@ function SearchBar(){
     return (
         <div style={{display:'flex', alignItems: 'center', justifyContent: 'center',}}>
         <Search >
-            <SearchIconWrapper>
-              <SearchIcon/>
+            <SearchIconWrapper type='submit' style={{color:'black', backgroundColor:'white', borderRadius: 17}}>
+              <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="search by name"
               inputProps={{ 'aria-label': 'search' }}
+              name="name"
             />
           </Search>
         </div>

@@ -6,18 +6,29 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import {useAuth} from '../../hooks/auth'
+import { useState } from 'react';
+import { FormGroup } from '@mui/material';
 
 const theme = createTheme();
 
 export default function SignUpForm() {
+
+  const { loading, error, authenticateUser } = useAuth("signup");
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const email = data.get('email');
+    const password = data.get('password');
+
+    if(!email || !password){
+      console.log('empty')
+      return 
+    }
+    
+    authenticateUser(email, password);
   };
 
 
@@ -32,7 +43,7 @@ export default function SignUpForm() {
             alignItems: 'center',
           }}
         >
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 , marginBottom:2}}>
+          <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 , marginBottom:2}}>
           <TextField
               style={{backgroundColor:'white', marginBottom:15}}
               fullWidth
@@ -62,6 +73,7 @@ export default function SignUpForm() {
               id="password"
               autoComplete="current-password"
             />
+            {error? <p style={{color:'red', backgroundColor:'#f0efed', padding:10, borderRadius:5}}>{error}</p>: null}
             <Button
               type="submit"
               fullWidth
@@ -80,3 +92,5 @@ export default function SignUpForm() {
     </ThemeProvider>
   );
 }
+
+

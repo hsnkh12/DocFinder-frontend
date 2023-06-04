@@ -1,23 +1,51 @@
-import { Link } from "@mui/material"
+import { Link } from "react-router-dom"
 
+export default function DoctorProfile(props){
 
-export default function DoctorProfile(){
+    const doc = props.doctor
 
+    const getRatingAvg = () => {
+
+        let rate = doc.avgReviews[0].rating
+        rate = !rate? 0.0: Math.round(rate, 1)
+  
+        return rate
+      }
+  
+      const getRatingColor = () => {
+
+        const rate = getRatingAvg()
+
+        if (rate == 0){
+            return "gray"
+        }
+  
+        if( rate  > 0 && rate < 2.0 ){
+          return "#c21f1f"
+        } 
+        if ( rate >= 2.0 && rate < 3.0 ){
+          return "#cf9a1f"
+        } 
+        if ( rate >= 3.0 && rate < 4){
+          return '#4caf50'
+        }
+        return '#2d8531'
+      }
 
     return (
         <div>
 
-        <div style={{width:300, height:300, backgroundColor:'gray'}}>Doctor's Image..</div>
-        <h3 style={{marginBottom:0}}>Dr. Emery Heck</h3>
-        <p style={{fontSize:16}}>General surgery</p>
+        <img src={doc.image} style={{width:300, height:300}} />
+        <h3 style={{marginBottom:0}}>{doc.name}</h3>
+        <p style={{fontSize:16}}>{doc.field_name}</p>
         <br></br>
         <hr></hr>
-        <p style={{fontSize:14}} >+90 533 888 20 29</p>
-        <p style={{fontSize:14}}>Mohammad@clinic.com</p>
-        <p style={{fontSize:14, maxWidth:300}}>addresss: 86 Athinon StreetNora Court3rd Floor Office Flat 301-302.....</p>
+        <p style={{fontSize:14}} >{doc.phone_number}</p>
+        <p style={{fontSize:14}}>{doc.email}</p>
+        <p style={{fontSize:14, maxWidth:300}}>Esref Bitlis Cad. Narlik Street, Famagusta</p>
 
-        <p style={{fontSize:25, color:'#4caf50', marginBottom:0}}>4.5</p>
-        <Link to="/react">Reviews</Link>
+        <p style={{fontSize:25, color:getRatingColor(), marginBottom:0}}>{getRatingAvg()}</p>
+        <Link to={"/reviews/"+doc.doctor_id}>Reviews</Link>
 
 </div>
 

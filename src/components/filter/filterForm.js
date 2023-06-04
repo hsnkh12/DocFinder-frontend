@@ -4,7 +4,21 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { Grid } from '@mui/material';
 
-export default function FilterForm() {
+export default function FilterForm(props) {
+
+    const handleSpecChange = (event, newValue) => {
+        props.setSpec(newValue)
+    }
+
+    const handleClinicChange = (event, newValue) => {
+        props.setClinic(newValue)
+    }
+
+    const handleSortChange = (event, newValue) => {
+        props.setOrderBy(newValue)
+    }
+
+
   return (
     <Grid container spacing={2}>
 
@@ -16,7 +30,8 @@ export default function FilterForm() {
                 size="small"
                 options={specs}
                 getOptionLabel={(option) => option}
-                defaultValue={specs[0]}
+                defaultValue={props.spec}
+                onChange={handleSpecChange}
                 renderInput={(params) => (
                 <TextField
                     {...params}
@@ -30,7 +45,8 @@ export default function FilterForm() {
                 size="small"
                 options={clinics}
                 getOptionLabel={(option) => option}
-                defaultValue={clinics[0]}
+                defaultValue={props.clinic}
+                onChange={handleClinicChange}
                 renderInput={(params) => (
                 <TextField
                     {...params}
@@ -53,7 +69,8 @@ export default function FilterForm() {
                 size="small"
                 options={sort}
                 getOptionLabel={(option) => option}
-                defaultValue={sort[0]}
+                defaultValue={props.orderBy}
+                onChange={handleSortChange}
                 renderInput={(params) => (
                 <TextField
                     {...params}
@@ -71,15 +88,44 @@ export default function FilterForm() {
 
 
 const specs = [
-    'All',
-    'spec1',
-    'spec1'
-];
+    'all',
+    'Aesthetics and Plastic Reconstructive Surgery',
+    'Anesthesia and Reanimation',
+    'Cardiology',
+    'Cardiovascular Surgery',
+    'Dentist',
+    'Eye Health and Diseases',
+    'Gastroenterology',
+    'General Surgery',
+    'Gynecology and Obstetrics',
+    'IN VITRO FERTILIZATION',
+    'Internal Medicine',
+    'Laboratory',
+    'Language and Speech Disorders',
+    'Neurology',
+    'Nutrition and Diet',
+    'Ophthalmology',
+    'Oral, Dental and Maxillofacial Surgery',
+    'Orthodontics',
+    'Orthopedics and Traumatology',
+    'Otorhinolaryngology',
+    'Pathology',
+    'Pediatrics',
+    'Pedodontics (Pediatric Dentistry)',
+    'Periodontology (Gingival Diseases)',
+    'Physical Treatment and Rehabilitation',
+    'Psychiatry',
+    'Psychology',
+    'Pulmonology',
+    'Radiology',
+    'Skin Diseases',
+    'Techniques Podology',
+    'Urology',
+    'X Orthesis and Prosthesis'
+  ];
 
 const clinics = [
-    'All',
-    'cl1',
-    'cl1'
+    "Cyprus Central Hospital"
 ];
 
 const sort = [
