@@ -10,7 +10,7 @@ export default function DoctorItem(props){
     const getRatingAvg = () => {
 
         let rate = doc.avgReviews[0].rating
-        rate = !rate? 0.0: Math.round(rate, 1)
+        rate = !rate? 0.0: parseInt(rate)
   
         return rate
       }

@@ -21,6 +21,16 @@ export default function ScrapDoctorsPage(props){
           return navigate("/signin")
         }
 
+        await axios({
+          method: 'post',
+          url: "http://localhost:8000/doctors/scrap/",
+          headers: {"authorization" : `Bearer ${token}`},
+          data: {
+            field_name: spec,
+            clinic_id: clinic
+          }
+        })
+
         const response = await axios({
           method: 'post',
           url: "http://localhost:8000/doctors/scrap/",

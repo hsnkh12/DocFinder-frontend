@@ -20,6 +20,7 @@ export default function SignUpForm() {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
+    const username = data.get('username')
     const email = data.get('email');
     const password = data.get('password');
 
@@ -28,7 +29,7 @@ export default function SignUpForm() {
       return 
     }
     
-    authenticateUser(email, password);
+    authenticateUser(email, password, username);
   };
 
 

@@ -72,13 +72,14 @@ const useAuth = (route) => {
   const navigate = useNavigate()
   const { setIsAuthenticated } = useContext(AuthContext);
 
-  const authenticateUser = async (email, password) => {
+  const authenticateUser = async (email, password, username=null) => {
     setLoading(true);
     setError(null);
 
     try {
       // Send a POST request to the authentication API endpoint
       const response = await axios.post('http://localhost:8000/users/'+route, {
+        username,
         email,
         password,
       });
